@@ -1,22 +1,25 @@
 require 'pry'
 
 class Person
+
+  attr_reader :name
+  attr_accessor :bank_account
+
   def initialize(name)
     @name = name
-    @bank = 25
+    @bank_account = 25
     @happiness = 8
     @hygiene = 8
   end
 
-  attr_reader(name)
-  attr_accessor(bank)
+
 
   def happiness
     @happiness
   end
 
   def happiness=(new_happiness)
-    @happiness=new_happiness
+    @happiness=new_happiness.clamp(0,10)
   end
 
   def hygiene
@@ -24,77 +27,59 @@ class Person
   end
 
   def hygiene=(new_hygiene)
-    @hygiene=new_hygiene
+    @hygiene=new_hygiene.clamp(0,10)
   end
 
   def happy?
-    if @happiness > 7 ? true : false
-  end
+    self.happiness > 7
+end
 
   def clean?
-    if @happiness > 7 ? true : false
-  end
+    self.hygiene > 7
+end
 
   def get_paid(salary)
-    @bank += salary
+    @bank_account += salary
     return "all about the benjamins"
   end
 
   def take_bath
-    if @hygiene >= 6
-      @hygiene = 10
-    else
-      @hygiene += 4
-    end
+      self.hygiene+= 4
     return "♪ Rub-a-dub just relaxing in the tub ♫"
   end
 
   def work_out
     # decrement happiness
-    if @happiness >= 8
-      @happiness = 10
-    else
-      @happiness += 2
-    end
+      self.happiness += 2
     # increment hygiene
-    if @hygiene <= 3
-      @hygiene = 0
-    else
-      @hygiene -= 3
-    end
+      self.hygiene -= 3
     # return queen lyrics
     return "♪ another one bites the dust ♫"
   end
 
   def call_friend(friend)
     # increment caller's happiness
-    if @happiness >= 7
-      @happiness = 10
-    else
-      @happiness += 3
-    end
+    self.happiness +=3
 
     # increment callee's happiness
-    if friend.happiness >= 7
-      friend.happiness = 10
-    else
-      friend.happiness += 3
-    end
+    friend.happiness +=3
 
+    return "Hi #{friend.name}! It's #{self.name}. How are you?"
   end
 
-  def start_conversation(person, topic)
+  def start_conversation(friend, topic)
     case topic
     when "politics"
-      @happiness = (@happiness - 1).clamp(0, 10)
-      friend.happiness = (friend.happiness - 1).clamp(0, 10)
+      self.happiness -=2
+      friend.happiness = (friend.happiness-2)
       return "blah blah partisan blah lobbyist"
     when "weather"
-      @happiness = (@happiness - 1).clamp(0, 10)
-      friend.happiness = (friend.happiness - 1).clamp(0, 10)
+      self.happiness +=1
+      friend.happiness = (friend.happiness + 1)
       return "blah blah sun blah rain"
     else
       return "blah blah blah blah blah"
   end
 
+end
 end
