@@ -1,3 +1,5 @@
+require 'pry'
+
 class Person
 
   attr_reader :name, :happiness, :hygiene
@@ -39,34 +41,31 @@ class Person
 
 
     def happy?
-      @happiness > 7
+      self.happiness > 7
     end
 
     def clean?
-      @hygiene > 7
+      self.hygiene > 7
     end
-
   def get_paid(salary)
-    @bank_account += salary
+    self.bank_account += salary
     "all about the benjamins"
   end
 
   def take_bath
-    @hygiene += 4
-    self.hygiene=(@hygiene)
+
+    self.hygiene += 4
     "♪ Rub-a-dub just relaxing in the tub ♫"
   end
 
   def work_out
-    @hygiene -= 3
-    @happiness += 2
-    self.hygiene=(@hygiene)
-    self.happiness=(@happiness)
+    self.hygiene -= 3
+    self.happiness += 2
     "♪ another one bites the dust ♫"
   end
 
   def call_friend(person)
-    if Person.all.include?(person)
+    if Person.all.include?(person) && person != self
       person.happiness += 3
       self.happiness += 3
       "Hi #{person.name}! It's #{self.name}. How are you?"
@@ -90,10 +89,8 @@ class Person
 
 end
 
-lige = Person.new("Lige")
+dan = Person.new("Dan")
 
 nosa = Person.new("Nosa")
 
-dan = Person.new("Dan")
-
-puts Person.all.collect {|person| person.bank_account}
+lige = Person.new("Lige")
